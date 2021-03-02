@@ -63,7 +63,7 @@ export default function StackNavigation(props){
         <Stack.Screen
             name="movie"
             component={Movie}
-            options={{title:"",headerLeft:()=> buttonLeft("movie"),headerRight:()=>buttonRight()}}
+            options={{title:"",headerTransparent:true,headerLeft:()=> buttonLeft("movie"),headerRight:()=>buttonRight()}}
             />
 
             <Stack.Screen

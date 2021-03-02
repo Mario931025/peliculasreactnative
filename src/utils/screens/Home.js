@@ -3,6 +3,7 @@ import {StyleSheet, View,ScrollView, Text } from 'react-native'
 import {Title} from 'react-native-paper';
 import {map} from 'lodash'
 import CarouselVertical from '../components/CarouselVertical'
+import CarouselMulti from '../components/CarouselMulti';
 import {getNewsMoviesApi,getAllGenreApi,getGenreMovieApi } from '../api/movies'
 
 
@@ -19,7 +20,6 @@ const Home = (props) => {
    //guarda las peliuclas de los generos seleccionados
    const [genreMovies, setGenreMovies] = useState(null)
 
-   console.log(genreMovies)
 
     useEffect(() => {
       getNewsMoviesApi().then((response)=>{
@@ -82,6 +82,9 @@ const Home = (props) => {
 
                     ))}
                 </ScrollView>
+                {genreMovies && (
+                    <CarouselMulti data={genreMovies} navigation={navigation}/>
+                )}
             </View>
         </ScrollView>
     )
