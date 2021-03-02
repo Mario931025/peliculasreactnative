@@ -1,9 +1,15 @@
 import React,{useState,useEffect} from 'react'
 import { StyleSheet,  View, Image,ScrollView } from 'react-native'
 import {Text,Title,IconButton} from 'react-native-paper'
+import {map} from 'lodash'
+import {Rating} from 'react-native-ratings'
 import ModalVideo from '../components/ModalVideo'
 import {getMovieById} from '../api/movies'
 import {BASE_PATH_IMG} from '../constans'
+import usePreferences from '../hooks/usePreferences'
+import starDark from '../../assets/png/starDark.png'
+import starLight from '../../assets/png/starLight.png'
+
 
 export default function Movie(props) {
 
@@ -24,13 +30,19 @@ export default function Movie(props) {
     if(!movie) return null;
     return (
         <>
-            <ScrollView>
+            <ScrollView showsHorizontalScrollIndicator={false}>
                 <MovieImage posterPath={movie.poster_path} />
                 <MovieTrailler setShowVideo={setShowVideo}/>
+                <MovieTitle movie={movie}/>
+                <MovieRating voteCount={movie.vote_count} voteAverage={movie.vote_average}/>
+                <Text style={styles.overview}>{movie.overview}</Text>
+                <Text style={[styles.overview,{marginBottom:30}]}>Fecha de lanzamiento {movie.release_date}</Text>
+           
             </ScrollView>
 
             <ModalVideo show={showvideo} setShow={setShowVideo} idMovie={id} />
 
+            
         </>
     )
 }
@@ -66,6 +78,50 @@ function MovieTrailler(props){
 
 }
 
+function MovieTitle(props){
+    const {movie} = props
+
+    return (
+        <View style={ styles.viewInfo }>
+            <Title>{movie.title }</Title>
+            <View style={styles.viewGenres}>
+                {map(movie.genres,(genre)=>(
+                        <Text key={genre.id} style={styles.genre}>
+                            {genre.name}
+                        </Text>
+                ))}
+            </View>
+        </View>
+    )
+}
+
+function MovieRating(props){
+
+    const {voteCount,voteAverage} = props; //propiedades ya de la peli
+
+    const media = voteAverage / 2;
+
+    const {theme} = usePreferences()
+
+    return (
+        <View style={styles.rating}>
+            <Rating
+                type="custom"
+                ratingImage={theme === "dark" ? starDark : starLight}
+                ratingColor= '#ffc205'
+                ratingBackgroundColor= {theme === "dark" ? "#192734" :"#f0f0f0"}
+                startingValue={media}
+                imageSize={20}
+                style={{marginRight:15}}
+           />
+           <Text style={{fontSize:16,marginRight:5}}>{media}</Text>
+           <Text style={{fontSize:12,color:"#8697a5"}}>
+               {voteCount} votos
+           </Text>
+        </View>
+    )
+}
+
 
 const styles = StyleSheet.create({
     viewPotser:{
@@ -94,5 +150,29 @@ const styles = StyleSheet.create({
         width:60,
         height:60,
         borderRadius:100
+    },
+    viewInfo:{
+        marginHorizontal:30
+    },
+    viewGenres:{
+        flexDirection:"row",
+
+    },
+    genre:{
+        marginRight:20,
+        color:"#8697a5"
+
+    },
+    rating:{
+        marginHorizontal:30,
+        marginTop:10,
+        flexDirection:"row",
+        alignItems:"center"
+    },
+    overview:{
+        marginHorizontal:30,
+        marginTop:20,
+        textAlign:"justify",
+        color:"#8697a5"
     }
 })

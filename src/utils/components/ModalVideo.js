@@ -60,9 +60,9 @@ const styles = StyleSheet.create({
         alignItems:"center"
     },
     close:{
-        backgroundColor:"#1ea1f2",
-        width:50,
-        height:50,
+        backgroundColor:"#062030",
+        width:30,
+        height:30,
         borderRadius:100,
         position:"absolute",
         bottom:100
