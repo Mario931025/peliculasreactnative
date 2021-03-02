@@ -29,7 +29,7 @@ export default function Movie(props) {
                 <MovieTrailler setShowVideo={setShowVideo}/>
             </ScrollView>
 
-            <ModalVideo show={showvideo} setShow={setShowVideo}/>
+            <ModalVideo show={showvideo} setShow={setShowVideo} idMovie={id} />
 
         </>
     )
