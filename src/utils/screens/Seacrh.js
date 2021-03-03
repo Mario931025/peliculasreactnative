@@ -27,7 +27,7 @@ export default function Search(props) {
 
   useEffect(() => {
     if (size(search) > 2) {
-      searchMoviesApi(search).then((response) => {
+      searchMovieApi(search).then((response) => {
         setMovies(response.results);
       });
     }
@@ -70,7 +70,7 @@ function Movie(props) {
             source={{ uri: `${BASE_PATH_IMG}/w500${poster_path}` }}
           />
         ) : (
-          <Text>{title}</Text>
+          <Text style={{color:"#fff"}}>{title}</Text>
         )}
       </View>
     </TouchableWithoutFeedback>
