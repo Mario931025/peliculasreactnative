@@ -46,7 +46,7 @@ function RenderItem(props){
     }
 
     return (
-        <TouchableWithoutFeedback onPress={onNavigation()}>
+        <TouchableWithoutFeedback onPress={onNavigation}>
             <View style={styles.card}>
                 <Image style={styles.image} source={{uri:imageUrl}}/>
                 <Title style ={styles.title}>{title}</Title>
